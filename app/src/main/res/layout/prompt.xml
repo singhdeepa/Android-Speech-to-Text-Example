@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textColor="@color/black"
+        android:id="@+id/title"
+        android:textSize="16sp"
+        android:padding="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:visibility="gone"
+        android:layout_margin="8dp"
+        android:textColor="@color/black"
+        android:id="@+id/messageLabel"
+        android:textSize="16sp"
+        android:padding="8dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        android:inputType="numberPassword"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/gray"
+        android:id="@+id/message"
+        android:textSize="16sp"
+        android:padding="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioYes"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/yes"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:button="@null"
+            android:textColor="@color/splash_background"
+            android:textAllCaps="true"
+            android:padding="8dp"/>
+
+        <RadioButton
+            android:id="@+id/radioNO"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textColor="@color/splash_background"
+            android:layout_height="wrap_content"
+            android:text="@string/no"
+            android:button="@null"
+            android:padding="8dp"/>
+
+    </RadioGroup>
+
+</LinearLayout>

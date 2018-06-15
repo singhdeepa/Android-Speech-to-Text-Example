@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">Speech to Text</string>
     <string name="hint">Tap on mic to start</string>
+
+    <string name="text_view_paired">Paired Devices</string>
+    <string name="discovered_devices">Discovered Devices</string>
+    <string name="close">Close</string>
+    <string name="bluetooth_devices">Bluetooth Devices</string>
+
+    <string name="enter_password">Enter Password</string>
+
+    <string name="none_paired">No devices have been paired</string>
+
+    <string name="bluetooth_disabled">Bluetooth still disabled, turn off application!</string>
+
+    <string name="not_connected">Not connected</string>
+    <string name="none_found">No devices found</string>
+
+    <string name="yes"> Yes </string>
+    <string name="no"> No </string>
+    <string name="password">Password</string>
+    <string name="connected_to">Connected to:</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="cancel">Cancel</string>
 </resources>
