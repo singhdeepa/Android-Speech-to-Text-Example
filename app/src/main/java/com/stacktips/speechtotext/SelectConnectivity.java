@@ -154,8 +154,8 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
                     String info = ((TextView) view).getText().toString();
 
                     String address = info.substring(info.length() - 17);
-                    showAlert(getString(R.string.enter_password),address);
-//                    connectToDevice(address);
+//                    showAlert(getString(R.string.enter_password),address);
+                    connectToDevice(address);
                     dialog.dismiss();
 
 
@@ -176,8 +176,8 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
                         //do nothing
                     }else {
                         String address = info.substring(info.length() - 17);
-                        showAlert(getString(R.string.enter_password),address);
-//                   connectToDevice(address);
+//                        showAlert(getString(R.string.enter_password),address);
+                   connectToDevice(address);
                         dialog.dismiss();
                     }
 
@@ -311,57 +311,57 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
     };
 
 
-    private void showAlert(String title, final String address)
-    {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View promptView = layoutInflater.inflate(R.layout.prompt, null);
-
-        final AlertDialog alertD = new AlertDialog.Builder(this).create();
-
-        TextView titleTxt = (TextView) promptView.findViewById(R.id.title);
-        titleTxt.setText(title);
-
-        final EditText msgTxt = (EditText) promptView.findViewById(R.id.message);
-        msgTxt.setText("1234");
-        msgTxt.setHint(R.string.password);
-        msgTxt.setVisibility(View.VISIBLE);
-
-        final RadioButton btnAdd1 = (RadioButton) promptView.findViewById(R.id.radioYes);
-        btnAdd1.setText(R.string.yes);
-
-        final RadioButton btnAdd2 = (RadioButton) promptView.findViewById(R.id.radioNO);
-        btnAdd2.setText(R.string.cancel);
-
-        btnAdd1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //remove this after testing
-                if(msgTxt.getText().toString().equals("1234")) {
-                    connectToDevice(address);
-
-                }else {
-                    Toast.makeText(SelectConnectivity.this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
-
-                }
-                alertD.dismiss();
-
-
-            }
-        });
-        btnAdd2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                alertD.dismiss();
-
-            }
-        });
-
-        alertD.setView(promptView);
-
-        alertD.show();
-
-    }
+//    private void showAlert(String title, final String address)
+//    {
+//        LayoutInflater layoutInflater = LayoutInflater.from(this);
+//        View promptView = layoutInflater.inflate(R.layout.prompt, null);
+//
+//        final AlertDialog alertD = new AlertDialog.Builder(this).create();
+//
+//        TextView titleTxt = (TextView) promptView.findViewById(R.id.title);
+//        titleTxt.setText(title);
+//
+//        final EditText msgTxt = (EditText) promptView.findViewById(R.id.message);
+//        msgTxt.setText("1234");
+//        msgTxt.setHint(R.string.password);
+//        msgTxt.setVisibility(View.VISIBLE);
+//
+//        final RadioButton btnAdd1 = (RadioButton) promptView.findViewById(R.id.radioYes);
+//        btnAdd1.setText(R.string.yes);
+//
+//        final RadioButton btnAdd2 = (RadioButton) promptView.findViewById(R.id.radioNO);
+//        btnAdd2.setText(R.string.cancel);
+//
+//        btnAdd1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //remove this after testing
+//                if(msgTxt.getText().toString().equals("1234")) {
+//                    connectToDevice(address);
+//
+//                }else {
+//                    Toast.makeText(SelectConnectivity.this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
+//
+//                }
+//                alertD.dismiss();
+//
+//
+//            }
+//        });
+//        btnAdd2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                alertD.dismiss();
+//
+//            }
+//        });
+//
+//        alertD.setView(promptView);
+//
+//        alertD.show();
+//
+//    }
 
     private  void makeTransition(){
         new DataBytes(SelectConnectivity.this).sendTxtMessage("msg");
