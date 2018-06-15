@@ -22,12 +22,15 @@
             android:textColor="@android:color/black"
             android:layout_marginLeft="30dp"
             android:id="@+id/connectTxt"
+            android:text="Connect"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
+        <pl.droidsonroids.gif.GifTextView
+            android:layout_width="200dp"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
+            android:background="@drawable/loader1"
 
             android:textSize="20sp"
             android:textAlignment="center"
@@ -43,46 +46,27 @@
             android:layout_above="@+id/connectTxt"
             android:textColor="@android:color/holo_red_dark"/>
 
-
                         <LinearLayout
                             android:gravity="center"
-
                             android:layout_marginTop="20dp"
                             android:layout_below="@+id/connectTxt"
                             android:layout_width="match_parent"
                             android:layout_height="100dp">
 
-
-
-
                             <ImageButton
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
                                 android:elevation="8dp"
-
                                 android:layout_margin="10dp"
-                                android:id="@+id/bluetoothBtn"
+                                android:id="@+id/btnBluetooth"
                                 android:src="@drawable/bluetooth_logo"
                                 android:background="@drawable/blue_btn"
                                 />
 
                         </LinearLayout>
-
-
-
                 </RelativeLayout>
 
 
 </RelativeLayout>
 
 
-<!--<ImageButton-->
-<!--android:layout_width="0dp"-->
-<!--android:layout_height="60dp"-->
-<!--android:layout_weight="0.4"-->
-<!--android:id="@+id/wifiBtn"-->
-<!--android:layout_margin="10dp"-->
-<!--android:tint="@android:color/white"-->
-<!--android:background="@drawable/circular_orange_btn"-->
-<!--app:srcCompat="@drawable/ic_wifi_black_24dp"-->
-<!--android:padding="10dp"/>-->

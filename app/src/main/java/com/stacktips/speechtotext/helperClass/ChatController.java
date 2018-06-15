@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.stacktips.speechtotext;
+package com.stacktips.speechtotext.helperClass;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -33,11 +33,11 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 
-import static com.stacktips.speechtotext.Constants.DEVICE_OBJECT;
-import static com.stacktips.speechtotext.Constants.MESSAGE_READ;
-import static com.stacktips.speechtotext.Constants.MESSAGE_STATE_CHANGE;
-import static com.stacktips.speechtotext.Constants.MESSAGE_TOAST;
-import static com.stacktips.speechtotext.Constants.MESSAGE_WRITE;
+import static com.stacktips.speechtotext.helperClass.Constants.DEVICE_OBJECT;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_READ;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_STATE_CHANGE;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_TOAST;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_WRITE;
 
 public class ChatController {
     private static final String APP_NAME = "BluetoothChatApp";

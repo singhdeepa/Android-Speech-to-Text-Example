@@ -1,8 +1,6 @@
-package com.stacktips.speechtotext;
+package com.stacktips.speechtotext.activities;
 
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,30 +13,32 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import static com.stacktips.speechtotext.Constants.DEVICE_OBJECT;
-import static com.stacktips.speechtotext.Constants.MESSAGE_READ;
-import static com.stacktips.speechtotext.Constants.MESSAGE_STATE_CHANGE;
-import static com.stacktips.speechtotext.Constants.MESSAGE_TOAST;
-import static com.stacktips.speechtotext.Constants.MESSAGE_WRITE;
-import static com.stacktips.speechtotext.Constants.REQUEST_ENABLE_BLUETOOTH;
-import static com.stacktips.speechtotext.Constants.bluetoothAdapter;
-import static com.stacktips.speechtotext.Constants.chatController;
+import com.stacktips.speechtotext.helperClass.ChatController;
+import com.stacktips.speechtotext.helperClass.Constants;
+import com.stacktips.speechtotext.dataSet.DataBytes;
+import com.stacktips.speechtotext.R;
+
+import static com.stacktips.speechtotext.helperClass.Constants.DEVICE_OBJECT;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_READ;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_STATE_CHANGE;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_TOAST;
+import static com.stacktips.speechtotext.helperClass.Constants.MESSAGE_WRITE;
+import static com.stacktips.speechtotext.helperClass.Constants.REQUEST_ENABLE_BLUETOOTH;
+import static com.stacktips.speechtotext.helperClass.Constants.bluetoothAdapter;
+import static com.stacktips.speechtotext.helperClass.Constants.chatController;
 import java.util.Set;
 
-public class SelectConnectivity extends AppCompatActivity implements View.OnClickListener {
-    ImageButton bluetoothBtn,wifiBtn;
+public class ConnectActivity extends AppCompatActivity implements View.OnClickListener {
+    ImageButton btnBluetooth;
     private Dialog dialog;
 
     private BluetoothDevice connectingDevice;
@@ -48,8 +48,6 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_connectivity_type);
-
-        // add this to your main activity's onCreate()-callback
 
         initViews();
 
@@ -61,12 +59,11 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
 
 
     private void initViews() {
-        bluetoothBtn = (ImageButton)findViewById(R.id.bluetoothBtn);
+        btnBluetooth = (ImageButton)findViewById(R.id.btnBluetooth);
 
     }
     private void initListener() {
-//        wifiBtn.setOnClickListener(this);
-        bluetoothBtn.setOnClickListener(this);
+        btnBluetooth.setOnClickListener(this);
     }
 
 
@@ -74,21 +71,16 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.bluetoothBtn:
+            case R.id.btnBluetooth:
                 if (!bluetoothAdapter.isEnabled()) {
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
                 } else {
-                    chatController = new ChatController(SelectConnectivity.this, handler);
+                    chatController = new ChatController(ConnectActivity.this, handler);
                 }
 
                 showPrinterPickDialog();
                 break;
-//            case R.id.wifiBtn:
-//                reInitializeValues();
-//                Intent intent=new Intent(SelectConnectivityType.this,WifiListActivity.class);
-//                startActivity(intent);
-//                break;
         }
 
     }
@@ -96,12 +88,9 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
-
-
-
-
+    
     private void showPrinterPickDialog() {
-        dialog = new Dialog(SelectConnectivity.this);
+        dialog = new Dialog(ConnectActivity.this);
         dialog.setContentView(R.layout.dialog_bluetooth_list);
         dialog.setTitle(R.string.bluetooth_devices);
 
@@ -112,8 +101,8 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
         bluetoothAdapter.startDiscovery();
 
         //Initializing bluetooth adapters
-        ArrayAdapter<String> pairedDevicesAdapter = new ArrayAdapter<>(SelectConnectivity.this, android.R.layout.simple_list_item_1);
-        discoveredDevicesAdapter = new ArrayAdapter<>(SelectConnectivity.this, android.R.layout.simple_list_item_1);
+        ArrayAdapter<String> pairedDevicesAdapter = new ArrayAdapter<>(ConnectActivity.this, android.R.layout.simple_list_item_1);
+        discoveredDevicesAdapter = new ArrayAdapter<>(ConnectActivity.this, android.R.layout.simple_list_item_1);
 
         //locate listviews and attatch the adapters
         ListView listView = (ListView) dialog.findViewById(R.id.pairedDeviceList);
@@ -215,10 +204,10 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_ENABLE_BLUETOOTH:
-                if (resultCode == SelectConnectivity.RESULT_OK) {
-                    chatController = new ChatController(SelectConnectivity.this, handler);
+                if (resultCode == ConnectActivity.RESULT_OK) {
+                    chatController = new ChatController(ConnectActivity.this, handler);
                 } else {
-                    Toast.makeText(SelectConnectivity.this, R.string.bluetooth_disabled, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConnectActivity.this, R.string.bluetooth_disabled, Toast.LENGTH_SHORT).show();
 
                 }
         }
@@ -238,7 +227,7 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
 
                             break;
                         case ChatController.STATE_CONNECTING:
-//                            Toast.makeText(SelectConnectivityType.this,"Connecting...", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ConnectActivityType.this,"Connecting...", Toast.LENGTH_SHORT).show();
                             break;
                         case ChatController.STATE_LISTEN:
                             break;
@@ -246,7 +235,7 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
                             Log.e("not conn","STATE_NONE"+122);
 //                            connectedStatus.setText("Not Connected");
 //                            reInitializeValues();
-                            Toast.makeText(SelectConnectivity.this, R.string.not_connected, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ConnectActivity.this, R.string.not_connected, Toast.LENGTH_SHORT).show();
                             break;
                     }
                     break;
@@ -259,12 +248,12 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
                     byte[] readBuf = (byte[]) msg.obj;
 //                    Log.e("len",""+readBuf.length);
 //                    String hexVal= bytesToHex(readBuf);
-//                    new HandleReceivedData(SelectConnectivityType.this).checkforValues(hexVal,readBuf);
+//                    new HandleReceivedData(ConnectActivityType.this).checkforValues(hexVal,readBuf);
 
                     break;
                 case Constants.MESSAGE_DEVICE_OBJECT:
                     connectingDevice = msg.getData().getParcelable(DEVICE_OBJECT);
-//                    Toast.makeText(SelectConnectivityType.this, "Connected to " + connectingDevice.getName(),
+//                    Toast.makeText(ConnectActivityType.this, "Connected to " + connectingDevice.getName(),
 //                            Toast.LENGTH_SHORT).show();
                     break;
                 case MESSAGE_TOAST:
@@ -288,7 +277,7 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
 //            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 //            startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
 //        } else {
-//            chatController = new ChatController(SelectConnectivityType.this, handler);
+//            chatController = new ChatController(ConnectActivityType.this, handler);
 //        }
     }
 
@@ -340,7 +329,7 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
 //                    connectToDevice(address);
 //
 //                }else {
-//                    Toast.makeText(SelectConnectivity.this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ConnectActivity.this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
 //
 //                }
 //                alertD.dismiss();
@@ -364,14 +353,14 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
 //    }
 
     private  void makeTransition(){
-        new DataBytes(SelectConnectivity.this).sendTxtMessage("msg");
+        new DataBytes(ConnectActivity.this).sendTxtMessage("msg");
 //        handler.postDelayed(new Runnable() {
 //
 //            @Override
 //            public void run() {
 //        isWifi=false;
-        Toast.makeText(SelectConnectivity.this, getString(R.string.connected_to) + connectingDevice.getName(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(SelectConnectivity.this, MainActivity.class);
+        Toast.makeText(ConnectActivity.this, getString(R.string.connected_to) + connectingDevice.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ConnectActivity.this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_out_left);
 
@@ -406,7 +395,7 @@ public class SelectConnectivity extends AppCompatActivity implements View.OnClic
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent i = new Intent(SelectConnectivity.this,MainActivity.class);
+        Intent i = new Intent(ConnectActivity.this,MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
 

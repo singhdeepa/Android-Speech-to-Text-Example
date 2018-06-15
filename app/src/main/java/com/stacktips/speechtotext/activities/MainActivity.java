@@ -1,4 +1,4 @@
-package com.stacktips.speechtotext;
+package com.stacktips.speechtotext.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.stacktips.speechtotext.R;
 
 import java.util.ArrayList;
 import java.util.Locale;

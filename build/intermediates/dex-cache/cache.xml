@@ -84,6 +84,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/apple/Documents/bitGithub/Android-Speech-to-Text-Example/app/build/intermediates/exploded-aar/pl.droidsonroids.gif/android-gif-drawable/1.2.3/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="75d15557ff7531e59b01362d46bb06dd59c5f971">
+        <dex dex="/Users/apple/Documents/bitGithub/Android-Speech-to-Text-Example/app/build/intermediates/pre-dexed/debug/pl.droidsonroids.gif-android-gif-drawable-1.2.3_27948c3b44a3100b4fa302f69243a8f6f629f2f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/apple/Documents/bitGithub/Android-Speech-to-Text-Example/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"

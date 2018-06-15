@@ -1,9 +1,9 @@
-package com.stacktips.speechtotext;
+package com.stacktips.speechtotext.dataSet;
 
 import android.content.Context;
 import android.util.Log;
 
-import static com.stacktips.speechtotext.Constants.chatController;
+import static com.stacktips.speechtotext.helperClass.Constants.chatController;
 
 
 /**

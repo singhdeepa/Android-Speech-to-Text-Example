@@ -1,11 +1,10 @@
-package com.stacktips.speechtotext;
+package com.stacktips.speechtotext.helperClass;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 
-import java.util.ArrayList;
+import com.stacktips.speechtotext.helperClass.ChatController;
 
 /**
  * Created by bitjini on 23/10/17.
