@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
         onReceiveText();
         //has no internet? fetch from local
         getChannels();
-
+        processVoiceInput("Hey DIsh tv and play the movie");
 
 //        processVoiceInput("Switch to channel number 14");
 //         speakWords("Switch to channel number 14");
@@ -209,6 +209,16 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
     private void processVoiceInput(String voiceText) {
 
+
+//        Log.e("before removing",""+voiceText);
+//        String[] regx = {"a,the,and"};
+//
+//        for (int i=0;i<voiceText.length();i++) {
+//            if (voiceText.equalsIgnoreCase(regx[i])) {
+//                voiceText = voiceText.replace("" + voiceText, "");
+//            }
+//        }
+//        Log.e("after removing",""+voiceText);
        if (voiceText.contains("channel number"))//switching to channel number
         {
             Log.e("enter channel num found","==="+222);
