@@ -183,14 +183,14 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
         }
 
 
-
-
     //speak the user text
     private void speakWords(String speech) {
 
         //speak straight away
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-        
+
+        myTTS.setPitch((float) 0.5);
+
     }
 
 
