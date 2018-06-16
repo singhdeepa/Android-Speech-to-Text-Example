@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.stacktips.speechtotext"
         minSdkVersion 15
@@ -27,4 +28,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
     testCompile 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
 }
