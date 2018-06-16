@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.stacktips.speechtotext.R;
 import com.stacktips.speechtotext.dataSet.ChannelModel;
+import com.stacktips.speechtotext.dataSet.DataBytes;
 import com.stacktips.speechtotext.dataSet.PushToFirebase;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
     ChannelModel channelModel;
     ArrayList<ChannelModel> channelList;
 
-
+     DataBytes dataBytes;
     //TTS object
     private TextToSpeech myTTS;
     //status check code
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
                     mVoiceInputTv.setText(result.get(0));
                     Log.e("result","======="+result.toString());
                     splitInoutString(result.get(0).toLowerCase());
-                    processVoiceInput(result.get(0).toLowerCase());
+//                    processVoiceInput(result.get(0).toLowerCase());
                 }
                 break;
            //act on result of TTS data check
@@ -183,7 +184,115 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
     private void splitInoutString(String s) {
         String[] parts = s.split(" ");
-        Log.e("3rd string","===="+parts[2]);
+        for (int i=0;i<parts.length;i++)
+        {
+            parts[i]=parts[i].toLowerCase();
+        }
+
+        if (parts[0].contains("hey") && parts[1].contains("man"))
+        {
+           processArray(parts);
+        }
+        else
+        {
+            notAvalidCmd();
+        }
+
+    }
+
+    private void notAvalidCmd() {
+        DataBytes.sendTxtMessage((byte) 0x6D);
+        speakWords("Please say something which i can understand");
+    }
+
+    private void processArray(String[] parts) {
+        if (parts[2].contains("mute"))
+        {
+            DataBytes.sendTxtMessage((byte) 0x65);
+            speakWords("Audio muted");
+        }
+
+        else if(parts[2].contains("unmute")) {
+            DataBytes.sendTxtMessage((byte) 0x66);
+            speakWords("Audio unmuted");
+        }
+
+
+        else if (parts[2].contains("play"))
+        {
+          if (parts.length>=2)
+          {
+              String channel="";
+              for (int i=3;i<parts.length;i++)
+              {
+                  channel=channel+" "+parts[i];
+              }
+              speakWords("Playing "+channel);
+              DataBytes.sendTxtMessage((byte) 0x67);
+          }
+          else
+          {
+              notAvalidCmd();
+          }
+        }
+
+
+        else if (parts[2].equals("increase") || parts[2].equals("decrease") )
+        {
+            if (parts.length>=3)
+            {
+                if (parts[3].equals("volume")){
+
+                    if (parts[2].equals("increase") )
+                    {
+                        DataBytes.sendTxtMessage((byte) 0x68);
+                        speakWords("Volume increased");
+                    }
+                    else {
+                        DataBytes.sendTxtMessage((byte) 0x69);
+                        speakWords("Volume decreased");
+                    }
+                }
+            }
+        }
+
+        else if (parts[2].contains("switch") || parts[2].contains("change") ){
+            if (parts.length>5){
+                if (parts[3].contains("to") && parts[4].contains("channel") && parts[5].contains("number") )
+                {
+                    String channel="";
+                    for (int i=6;i<parts.length;i++)
+                    {
+                        channel=channel+" "+parts[i];
+                    }
+                    DataBytes.sendTxtMessage((byte) 0x6A);
+                    speakWords("switched to channel number "+channel);
+                }else
+                {
+                    notAvalidCmd();
+                }
+
+            }else {
+                notAvalidCmd();
+            }
+        }
+
+
+        else if (parts[2].contains("check") && parts[3].contains("for") ){
+            if (parts[3].equals("salman") && parts.equals("khan"))
+            {
+                DataBytes.sendTxtMessage((byte) 0x6B);
+                speakWords("Salman khan movie Race is playing in Star plus Enjoy");
+            }
+            else if ((parts[3].equals("james") && parts.equals("bond")))
+            {
+                DataBytes.sendTxtMessage((byte) 0x6C);
+                speakWords("There are no james bond movies playing");
+            }else {
+                notAvalidCmd();
+            }
+
+        }
 
     }
 
@@ -191,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
     //speak the user text
     private void speakWords(String speech) {
 
+        Log.e("speaking===","===="+speech);
         //speak straight away
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
         myTTS.setPitch((float) 0.5);

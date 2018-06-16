@@ -353,7 +353,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
 //    }
 
     private  void makeTransition(){
-        new DataBytes(ConnectActivity.this).sendTxtMessage("msg");
+//        new DataBytes(ConnectActivity.this).sendTxtMessage("msg");
 //        handler.postDelayed(new Runnable() {
 //
 //            @Override

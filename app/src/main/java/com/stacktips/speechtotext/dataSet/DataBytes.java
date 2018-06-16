@@ -20,36 +20,22 @@ public class DataBytes {
 
     }
     //Text message
-    public void sendTxtMessage(String mssg)
+    public static  void sendTxtMessage(byte b)
     {
            byte[] data = new byte[400];
-            data[0] = 0x6E; //110
+            data[0] = b; //110
 
 
-            byte[] array = mssg.getBytes();
-            //length of Payload
-            data[1] = (byte) array.length;  // mssg length
-            Log.e(" data[1]=",""+ data[1]);
-            Log.e("msg=",""+mssg);
-            //Payload
-            for (int i=2;i<array.length+2;i++)
+            for (int i=1;i<399;i++)
             {
-                data[i]=array[i-2];
+                data[i]=(byte) 0xFF;
 
             }
 
-            for (int j=array.length+2;j<397;j++)
-            {
-
-                data[j]=(byte) 0xFF;
-            }
             data[398] = 0x0A;
             data[399] = 0x0D;
 
-            Log.e("array",""+array);
-            Log.e("array len",""+array.length);
 
-            Log.e("payload",""+data);
             chatController.write(data);
 
 //        bt.send(data, false);
