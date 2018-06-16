@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
         //has no internet? fetch from local
         getChannels();
 
+
 //        processVoiceInput("Switch to channel number 14");
 //         speakWords("Switch to channel number 14");
 
@@ -160,7 +161,11 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     mVoiceInputTv.setText(result.get(0));
                     Log.e("result","======="+result.toString());
+<<<<<<< HEAD
                     splitInoutString(result.get(0).toLowerCase());
+=======
+
+>>>>>>> 416e37a22f24133643b8dff5248eaeb80ca3d556
                     processVoiceInput(result.get(0).toLowerCase());
                 }
                 break;
@@ -193,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
         //speak straight away
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+
         myTTS.setPitch((float) 0.5);
 
     }
