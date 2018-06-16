@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference()
                 .child("channels");
 
+        Log.e("db ref","===="+mDatabase);
         channelList.clear();
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         if (voiceText.equals("swtich on tv"))//on TV
         {
 
+
         }
         else if  (voiceText.equals("switch off tv")) //off tv
         {
@@ -203,4 +205,5 @@ public class MainActivity extends AppCompatActivity {
     private void switchToChannelNumber(int channelNumber) {
         Log.e("channel number=","======"+channelNumber);
     }
+
 }
