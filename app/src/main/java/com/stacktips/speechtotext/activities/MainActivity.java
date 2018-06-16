@@ -48,11 +48,29 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
         initViews();
         initListners();
-        //  pushChannelsToFirebase();
+        //  pushChannelsToFirebase();   //For pushing channels to Firebase
+
+
+        //has Internet? fetch from Firebase
+        //getChannelsFromFirebase();
+        onReceiveText();
+        //has no internet? fetch from local
         getChannels();
 
-        //for debugging
-        processVoiceInput("change to channel number 15");
+//        processVoiceInput("Switch to channel number 14");
+//         speakWords("Switch to channel number 14");
+
+    }
+
+    private void getChannels() {
+        ChannelModel c1 = new ChannelModel("setmax","1","tzp",
+                "amir khan","xyz");
+        ChannelModel c2 = new ChannelModel("sony","2","CID",
+                "salman khan","ccc");
+
+
+        channelList.add(c1);
+        channelList.add(c2);
 
     }
 
@@ -61,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
     }
 
-    private void getChannels() {
+    private void getChannelsFromFirebase() {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference()
                 .child("channels");
@@ -98,17 +116,12 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
         mSpeakBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*
-
-              uncomment startVoice input and comment speakwords
-               */
-//                startVoiceInput();
-                String words = "Switched to your favorite channel";
-                speakWords(words);
+                startVoiceInput();
+//                String words = "Switched to your favorite channel";
+//                speakWords(words);
             }
         });
 
-        onReceiveText();
     }
 
     private void onReceiveText() {
@@ -147,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     mVoiceInputTv.setText(result.get(0));
                     Log.e("result","======="+result.toString());
-//                    processVoiceInput(result.get(0).toLowerCase());
+                    processVoiceInput(result.get(0).toLowerCase());
                 }
                 break;
            //act on result of TTS data check
@@ -192,37 +205,36 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
     }
 
     private void processVoiceInput(String voiceText) {
-//        switch (voiceText)
+
+       if (voiceText.contains("channel number"))//switching to channel number
+        {
+            Log.e("enter channel num found","==="+222);
+            String found  = fetchNumber(voiceText);
+          if (found.equals("notFound"))
+            {
+                Log.e("Speech",""+false);
+                speakWords("Please say valid channel number");
+            }
+            else
+            {
+                Log.e("Speech",""+true);
+                String words = "Switched to channel "+found;
+                speakWords(words);
+            }
+
+        }
+//        else if (voiceText.contains("actor") || voiceText.contains("actress"))// searching for actor/actress programms
 //        {
-//            case "":{
+//            searchActor(" ");
 //
-//            }
-        // }
-
-        if (voiceText.equals("swtich on tv"))//on TV
-        {
-
-
-        }
-        else if  (voiceText.equals("switch off tv")) //off tv
-        {
-
-        }
-        else if (voiceText.contains("channel number"))//switching to channel number
-        {
-
-            String subString= searchSubString(voiceText,"channel number");
-            int cNumber  = fetchNumber(voiceText);
-            switchToChannelNumber(cNumber);
-        }
-        else if (voiceText.contains("actor") || voiceText.contains("actress"))// searching for actor/actress programms
-        {
-            searchActor(" ");
-
-        }else if (voiceText.contains("movie"))//Searching for movie
-        {
-
-        }
+//        }else if (voiceText.contains("movie"))//Searching for movie
+//        {
+//            Log.e("enter movie found","==="+222);
+//        }
+        else
+       {
+           speakWords("Please say valid channel number");
+       }
 
     }
 
@@ -242,22 +254,30 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
     }
 
-    private int fetchNumber(String channelNumber) {
+    private String fetchNumber(String channelNumber) {
+        String toReturn="";
+        boolean isFound=false;
+        StringBuilder sb = new StringBuilder();
 
-        String x="";
+        char[] arr = new char[10];
         for (char ch : channelNumber.toCharArray()) {
             //5
             if (Character.isDigit(ch)) {
-                System.out.print(ch);
-                x.concat(String.valueOf(ch));
+                isFound=true;
+                Log.e("ch====","==="+ch);
+                sb.append(ch);
+                toReturn = sb.toString();
             }
         }
-
-        String cNumber  = channelNumber.replaceAll("[^0-9]", "");
-
-//        String cNumber=  CharMatcher.DIGIT.retainFrom("abc12 3def");
-        Log.e("channel number=","======"+x);
-        return 0;
+        if (isFound)
+        {
+            return  toReturn;
+//           return arr.toString();
+        }
+        else
+        {
+            return  "notFound";
+        }
 
     }
 
