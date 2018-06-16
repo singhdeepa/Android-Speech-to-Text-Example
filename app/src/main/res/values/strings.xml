@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DishTv Voice Control</string>
+    <string name="app_name">DishTv Voice Remote</string>
     <string name="hint">Tap on mic to start</string>
 
     <string name="text_view_paired">Paired Devices</string>
