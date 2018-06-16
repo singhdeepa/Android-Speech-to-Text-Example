@@ -2,8 +2,12 @@ package com.stacktips.speechtotext.dataSet;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import static com.stacktips.speechtotext.activities.SearchAndDisplayActivity.setupAudioManager;
+import static com.stacktips.speechtotext.activities.SearchAndDisplayActivity.showWebView;
 import static com.stacktips.speechtotext.helperClass.Constants.chatController;
+import static com.stacktips.speechtotext.helperClass.Constants.context;
 
 
 /**
@@ -55,5 +59,57 @@ public class DataBytes {
 //        bt.send(data, false);
 
     }
+    //Text message
+    public String receiveVoiceTxt(String hexVal, byte[] readBuf)
+    {
 
+        int unsignedType = unsignedToBytes(readBuf[0]);
+        Log.d("unsignedType", "= " + unsignedType);
+        switch (unsignedType) {
+
+            case 0x65:
+                // mute
+                setupAudioManager(101);
+                break;
+
+            case 0x66:
+                // unMute
+                setupAudioManager(102);
+            case 0x67:
+                //play
+            // aajtak live
+               showWebView("https://www.youtube.com/watch?v=X7Ktabhd8a4");
+                break;
+            case 0x68:
+                //increase
+                setupAudioManager(104);
+                break;
+            case 0x69:
+                //decrease
+                setupAudioManager(105);
+                break;
+            case 0x6A:
+                // switch or change
+                showWebView("https://www.youtube.com/watch?v=3qMNb7ITU6A");
+
+                break;
+            case 0x6B:
+                // actor
+                showWebView("https://www.youtube.com/watch?v=XJ4BsLFoNIk");
+
+                break;
+            case 0x6C:
+                // James bond
+//                sendTxtMessage("404");
+//                Toast.makeText(context,"Content not available",Toast.LENGTH_LONG).show();
+                break;
+                default:
+                    break;
+
+        }
+        return "";
+    }
+    public static int unsignedToBytes(byte b) {
+        return b & 0xFF;//255
+    }
 }

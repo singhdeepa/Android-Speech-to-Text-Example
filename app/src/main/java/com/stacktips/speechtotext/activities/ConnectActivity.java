@@ -246,9 +246,11 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
                     break;
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-//                    Log.e("len",""+readBuf.length);
-//                    String hexVal= bytesToHex(readBuf);
-//                    new HandleReceivedData(ConnectActivityType.this).checkforValues(hexVal,readBuf);
+                    Log.e("len",""+readBuf.length);
+
+                    String hexVal= bytesToHex(readBuf);
+                    Log.e("hexVal",""+hexVal);
+                    new DataBytes(ConnectActivity.this).receiveVoiceTxt(hexVal,readBuf);
 
                     break;
                 case Constants.MESSAGE_DEVICE_OBJECT:
@@ -300,58 +302,17 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
     };
 
 
-//    private void showAlert(String title, final String address)
-//    {
-//        LayoutInflater layoutInflater = LayoutInflater.from(this);
-//        View promptView = layoutInflater.inflate(R.layout.prompt, null);
-//
-//        final AlertDialog alertD = new AlertDialog.Builder(this).create();
-//
-//        TextView titleTxt = (TextView) promptView.findViewById(R.id.title);
-//        titleTxt.setText(title);
-//
-//        final EditText msgTxt = (EditText) promptView.findViewById(R.id.message);
-//        msgTxt.setText("1234");
-//        msgTxt.setHint(R.string.password);
-//        msgTxt.setVisibility(View.VISIBLE);
-//
-//        final RadioButton btnAdd1 = (RadioButton) promptView.findViewById(R.id.radioYes);
-//        btnAdd1.setText(R.string.yes);
-//
-//        final RadioButton btnAdd2 = (RadioButton) promptView.findViewById(R.id.radioNO);
-//        btnAdd2.setText(R.string.cancel);
-//
-//        btnAdd1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //remove this after testing
-//                if(msgTxt.getText().toString().equals("1234")) {
-//                    connectToDevice(address);
-//
-//                }else {
-//                    Toast.makeText(ConnectActivity.this, R.string.invalid_password, Toast.LENGTH_SHORT).show();
-//
-//                }
-//                alertD.dismiss();
-//
-//
-//            }
-//        });
-//        btnAdd2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                alertD.dismiss();
-//
-//            }
-//        });
-//
-//        alertD.setView(promptView);
-//
-//        alertD.show();
-//
-//    }
-
+//To convert bytes to hex
+private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
     private  void makeTransition(){
         new DataBytes(ConnectActivity.this).sendTxtMessage("msg");
 //        handler.postDelayed(new Runnable() {
@@ -360,7 +321,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
 //            public void run() {
 //        isWifi=false;
         Toast.makeText(ConnectActivity.this, getString(R.string.connected_to) + connectingDevice.getName(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(ConnectActivity.this, MainActivity.class);
+        Intent intent = new Intent(ConnectActivity.this, SearchAndDisplayActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_out_left);
 

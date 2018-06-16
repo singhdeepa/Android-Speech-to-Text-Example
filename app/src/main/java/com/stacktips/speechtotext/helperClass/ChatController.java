@@ -339,7 +339,7 @@ public class ChatController {
                     byte[] buffer;
 
 
-                        buffer = new byte[200];
+                        buffer = new byte[400];
 //                        System.out.println("len buff "+buffer.length);
                         int bytes;
                         // Read from the InputStream
