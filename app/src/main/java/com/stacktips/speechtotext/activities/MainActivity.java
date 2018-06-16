@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     mVoiceInputTv.setText(result.get(0));
                     Log.e("result","======="+result.toString());
+                    splitInoutString(result.get(0).toLowerCase());
                     processVoiceInput(result.get(0).toLowerCase());
                 }
                 break;
@@ -179,6 +180,12 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
             }
 
         }
+
+    private void splitInoutString(String s) {
+        String[] parts = s.split(" ");
+        Log.e("3rd string","===="+parts[2]);
+
+    }
 
 
     //speak the user text
