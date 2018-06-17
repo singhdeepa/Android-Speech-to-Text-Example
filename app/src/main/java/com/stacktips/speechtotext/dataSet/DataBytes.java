@@ -90,7 +90,7 @@ public class DataBytes {
                 break;
             case 0x6A:
                 // switch or change
-                showWebView("https://www.youtube.com/watch?v=3qMNb7ITU6A");
+                showWebView("https://www.youtube.com/watch?v=6wTBWneWimU");
 
                 break;
             case 0x6B:
@@ -103,8 +103,21 @@ public class DataBytes {
 //                sendTxtMessage("404");
 //                Toast.makeText(context,"Content not available",Toast.LENGTH_LONG).show();
                 break;
-                default:
+            case 0x6D:
                     break;
+            case 0x6E:
+                int unsignedType2 = unsignedToBytes(readBuf[1]);
+                if(unsignedType2==0x70){
+                    showWebView("https://www.youtube.com/watch?v=XJ4BsLFoNIk");
+
+                }else {
+                    showWebView("https://www.youtube.com/watch?v=LDA3PoDGW8Q");
+
+                }break;
+            case 0x72:
+                showWebView("https://www.youtube.com/watch?v=SDY1N-IJOA8");
+                break;
+
 
         }
         return "";
