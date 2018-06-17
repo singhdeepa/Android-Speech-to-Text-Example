@@ -26,10 +26,16 @@ public class DataBytes {
             data[0] = b; //110
 
 
+
             for (int i=1;i<399;i++)
             {
                 data[i]=(byte) 0xFF;
 
+            }
+
+            if (b==0x6E)
+            {
+                data[1]=0x70;
             }
 
             data[398] = 0x0A;
@@ -41,5 +47,31 @@ public class DataBytes {
 //        bt.send(data, false);
 
     }
+
+    //Text message
+    public static  void sendTxtMessages(byte b,byte c)
+    {
+        byte[] data = new byte[400];
+        data[0] = b; //110
+
+
+
+        for (int i=1;i<399;i++)
+        {
+            data[i]=(byte) 0xFF;
+
+        }
+        data[1]=c;
+        data[398] = 0x0A;
+        data[399] = 0x0D;
+
+
+        chatController.write(data);
+
+//        bt.send(data, false);
+
+    }
+
+
 
 }

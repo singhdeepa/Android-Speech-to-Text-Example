@@ -44,6 +44,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
     private BluetoothDevice connectingDevice;
     private ArrayAdapter<String> discoveredDevicesAdapter;
 
+   public static boolean isFromnotification=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -395,11 +396,7 @@ public class ConnectActivity extends AppCompatActivity implements View.OnClickLi
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent i = new Intent(ConnectActivity.this,MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
 
-        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_right);
         finish();
     }
 }

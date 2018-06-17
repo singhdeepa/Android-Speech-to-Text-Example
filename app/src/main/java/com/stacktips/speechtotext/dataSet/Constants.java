@@ -12,6 +12,8 @@ public class Constants {
     public static String channelnumber="number";
 
 
+    public static final String MyPREFERENCES = "MyPrefs" ;
+
 
 
 

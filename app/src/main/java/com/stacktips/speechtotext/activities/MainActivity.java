@@ -1,7 +1,9 @@
 package com.stacktips.speechtotext.activities;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -27,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import static com.stacktips.speechtotext.activities.ConnectActivity.isFromnotification;
+import static com.stacktips.speechtotext.dataSet.Constants.MyPREFERENCES;
+
 public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnInitListener {
 
     private static final int REQ_CODE_SPEECH_INPUT = 100;
@@ -40,16 +45,22 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
     private TextToSpeech myTTS;
     //status check code
     private static final int MY_DATA_CHECK_CODE = 101;
+    boolean isInterestSet=false,fromNotification=false;
 
-
+    SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String restoredText = sharedpreferences.getString("fromNotify", "no");
+
+        Log.e("restoredText","==="+restoredText);
+
         initViews();
         initListners();
-        //  pushChannelsToFirebase();   //For pushing channels to Firebase
+        pushChannelsToFirebase();   //For pushing channels to Firebase
 
 
         //has Internet? fetch from Firebase
@@ -61,6 +72,15 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 //        processVoiceInput("Switch to channel number 14");
 //         speakWords("Switch to channel number 14");
 
+        if (isFromnotification)
+        {
+//            myTTS = new TextToSpeech(this, this);
+            isFromnotification=false;
+            Log.e("restoredText","===yes");
+            fromNotification=true;
+            DataBytes.sendTxtMessage((byte) 0x72);
+//            speakWords("Do you want to watch FIFA");
+        }
     }
 
     private void getChannels() {
@@ -193,6 +213,42 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
         {
            processArray(parts);
         }
+        else if (parts[0].contains("kick") || parts[0].contains("wanted"))
+        {
+            if (isInterestSet)
+            {
+                isInterestSet=false;
+                if (parts[0].contains("kick"))
+                {
+                    DataBytes.sendTxtMessages((byte) 0x6E, (byte) 0x70);
+                    speakWords("Playing kick");
+                }
+               else {
+                    DataBytes.sendTxtMessages((byte) 0x6E, (byte) 0x71);
+                    speakWords("Playing wanted");
+                }
+            }
+            else
+            {
+                notAvalidCmd();
+            }
+
+        }
+        else if (parts[0].contains("yes") || parts[0].contains("no") )
+        {
+            if (fromNotification)
+            {
+                if (parts[0].contains("yes"))
+                {
+                    DataBytes.sendTxtMessage((byte) 0x72);
+                    speakWords("Playing fifa");
+                }
+            }else
+            {
+                notAvalidCmd();
+            }
+
+        }
         else
         {
             notAvalidCmd();
@@ -206,6 +262,8 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
     }
 
     private void processArray(String[] parts) {
+
+
         if (parts[2].contains("mute"))
         {
             DataBytes.sendTxtMessage((byte) 0x65);
@@ -226,15 +284,26 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
               for (int i=3;i<parts.length;i++)
               {
                   channel=channel+" "+parts[i];
+                  if (parts[i].contains("movie"))
+                  {
+//                      DataBytes.sendTxtMessage((byte) 0x6E);
+                      isInterestSet=true;
+                      speakWords("There are 2 movies based on your interest. Kick and Wanted ");
+                  }else
+                  {
+                      speakWords("Playing "+channel);
+                      DataBytes.sendTxtMessage((byte) 0x67);
+                  }
+
               }
-              speakWords("Playing "+channel);
-              DataBytes.sendTxtMessage((byte) 0x67);
+
           }
           else
           {
               notAvalidCmd();
           }
         }
+
 
 
         else if (parts[2].equals("increase") || parts[2].equals("decrease") )
@@ -279,12 +348,12 @@ public class MainActivity extends AppCompatActivity implements  TextToSpeech.OnI
 
 
         else if (parts[2].contains("check") && parts[3].contains("for") ){
-            if (parts[3].equals("salman") && parts.equals("khan"))
+            if (parts[4].contains("Salman") && parts[5].contains("Khan")  || (parts[4].contains("salman") && parts[5].contains("khan")))
             {
                 DataBytes.sendTxtMessage((byte) 0x6B);
-                speakWords("Salman khan movie Race is playing in Star plus Enjoy");
+                speakWords("Salman khan movie Kick is playing in Star plus Enjoy");
             }
-            else if ((parts[3].equals("james") && parts.equals("bond")))
+            else if (parts[4].contains("james") && parts[5].contains("bond") || (parts[4].contains("James") && parts[5].contains("Bond")))
             {
                 DataBytes.sendTxtMessage((byte) 0x6C);
                 speakWords("There are no james bond movies playing");

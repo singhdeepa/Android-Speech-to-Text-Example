@@ -22,4 +22,8 @@
     <string name="connected_to">Connected to:</string>
     <string name="invalid_password">Invalid Password</string>
     <string name="cancel">Cancel</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <string name="default_notification_channel_name" translatable="true">News</string>
 </resources>

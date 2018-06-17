@@ -13,7 +13,7 @@ public class PushToFirebase {
 
         ChannelModel c1 = new ChannelModel("setmax","1","tzp",
                            "amir khan","xyz");
-        ChannelModel c2 = new ChannelModel("sony","2","CID",
+        ChannelModel c2 = new ChannelModel("star plus","2","CID",
                 "salman khan","ccc");
 
 
